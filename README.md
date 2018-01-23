@@ -8,14 +8,14 @@ Header based Fisheye Authenticator to do SSO authentication via Kerberos and Apa
 
 # Installation
 
-- Copy FishEyeHeaderAuthenticator.jar to /var/atlassian/fisheye/lib/ (either from this repo or compile yourself from source)
-- Add logger in /opt/atlassian/fisheye/log4j.xml
+- Copy FishEyeHeaderAuthenticator.jar to `$FISHEYE_INST/lib/` (either from this repo or compile yourself from source)
+- Add logger in `/opt/atlassian/fisheye/log4j.xml`
 ```
 <logger name="com.cenqua.fisheye.user.plugin.FishEyeHeaderAuthenticator">
     <level value="DEBUG"/>
 </logger>
 ```
-- Bind FishEye to localhost in $FISHEYE_INST/config.xml
+- Bind FishEye to localhost in `$FISHEYE_INST/config.xml`
 ```
 <http bind="127.0.0.1:8060"/>
 ```
@@ -67,8 +67,8 @@ Header based Fisheye Authenticator to do SSO authentication via Kerberos and Apa
 
 Via the Properties field in the Custom Authenticator Settings you can define two optional settings:
 
-- authenticationHeader=<string> : Header to use (should contain username known to FishEye). Note that REMOTE_USER does not work so rewrite REMOTE_USER to another header in Apache (see example). Defaults to X-Forwarded-User.
-- dumpHeaders=<boolean> : When set to True all requests will be dumped in $FISHEYE_INST/var/log/atlassian-fisheye-YYYY-MM-DD.log. Defaults to False.
+- `authenticationHeader=<string>` : Header to use (should contain username known to FishEye). Note that `REMOTE_USER` does not work so rewrite `REMOTE_USER` to another header in Apache (see example). Defaults to X-Forwarded-User.
+- `dumpHeaders=<boolean>` : When set to True all requests will be dumped in `$FISHEYE_INST/var/log/atlassian-fisheye-YYYY-MM-DD.log`. Defaults to False.
 
 Use dumpHeaders only for debugging. It will write plain-text passwords in your log when no Kerberos ticket is available and user authenticated via HTTP Basic Auth fallback.
 

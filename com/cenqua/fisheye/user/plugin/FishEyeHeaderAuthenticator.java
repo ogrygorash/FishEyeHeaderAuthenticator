@@ -90,15 +90,18 @@ public class FishEyeHeaderAuthenticator extends AbstractFishEyeAuthenticator {
 	public void close() {}
 
 	public AuthToken checkPassword(String username, String password) {
-		return null;
+		log.debug("In checkPassword() - Returning new HeaderAuthToken(" + username + ") password: " + password);
+		return new HeaderAuthToken(username);
 	}
 
 	public AuthToken recreateAuth(String username) {
-		return null;
+		log.debug("In recreateAuth() - Returning new HeaderAuthToken(" + username + ")");
+		return new HeaderAuthToken(username);
 	}
-
+	
+	// always return false here, authorization is done based on group membership
 	public boolean hasPermissionToAccess(AuthToken tok, String repname, String constraint) {
-		log.debug("returning true for hasPermissionToAccess(" + tok + ", " + repname + ", " + constraint + ")");
-		return true;
+		log.debug("returning false for hasPermissionToAccess(" + tok + ", " + repname + ", " + constraint + ")");
+		return false;
 	}
 }

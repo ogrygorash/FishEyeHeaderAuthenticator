@@ -82,7 +82,8 @@ public class FishEyeHeaderAuthenticator extends AbstractFishEyeAuthenticator {
 		log.debug(username + " - In isRequestUserStillValid() for " + remoteUser + "(" + authenticationHeader + ")");
 		dumpRequestHeaders(request);
 		
-		return username != null && remoteUser != null && !username.isBlank() && !remoteUser.isBlank() && username == remoteUser;
+		return username != null && remoteUser != null && username.trim().length() > 0 && 
+			remoteUser.trim().length() > 0 && username.trim() == remoteUser.trim();
 	}
 
 	public void init(Properties cfg) {

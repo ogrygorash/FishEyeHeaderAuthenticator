@@ -51,12 +51,8 @@ public class FishEyeHeaderAuthenticator extends AbstractFishEyeAuthenticator {
 	private static final Logger log = Logger.getLogger(FishEyeHeaderAuthenticator.class);
 	private String authenticationHeader;
 	private boolean dumpHeaders;
-
-	public AuthToken checkRequest(HttpServletRequest request) {
-
-		String remoteUser = request.getHeader(authenticationHeader);
-		log.debug("Authenticating " + remoteUser + "(" + authenticationHeader + ")");
-
+	
+	public void dumpRequestHeaders(HttpServletRequest request) {
 		// dump all headers in request
 		if(dumpHeaders) {
 			Enumeration<String> headerNames = request.getHeaderNames();
@@ -65,6 +61,14 @@ public class FishEyeHeaderAuthenticator extends AbstractFishEyeAuthenticator {
 				log.debug("Header: " + headerName + ", value: " + request.getHeader(headerName));
 			}
 		}
+	}
+
+	public AuthToken checkRequest(HttpServletRequest request) {
+
+		String remoteUser = request.getHeader(authenticationHeader);
+		log.debug("Authenticating " + remoteUser + "(" + authenticationHeader + ")");
+
+		dumpRequestHeaders(request);
 
 		if(remoteUser != null) {
 			return new HeaderAuthToken(remoteUser);
@@ -73,7 +77,11 @@ public class FishEyeHeaderAuthenticator extends AbstractFishEyeAuthenticator {
 		return null;
 	}
 	
-	public boolean isRequestUserStillValid(String username, HttpServletRequest req) {
+	public boolean isRequestUserStillValid(String username, HttpServletRequest request) {
+		String remoteUser = request.getHeader(authenticationHeader);
+		log.debug(username + " - In isRequestUserStillValid() for " + remoteUser + "(" + authenticationHeader + ")");
+		dumpRequestHeaders(request);
+		
 		return true;
 	}
 
